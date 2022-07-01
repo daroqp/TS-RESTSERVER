@@ -1,6 +1,12 @@
 import app from "../config/app";
 import "dotenv/config";
+import { MongooseConfig } from "../../infra/database/config";
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server running on port ${process.env.PORT}`);
-});
+MongooseConfig.connect(process.env.MONGODB_CNN!)
+    .then(async () => {
+        app.listen(process.env.PORT, () => {
+            console.log(`Server running on port ${process.env.PORT}`);
+            console.log("Base de datos online");
+        });
+    })
+    .catch(console.error);
